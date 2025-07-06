@@ -59,7 +59,7 @@ def process_and_save_each_file(folder_path, output_dir="processed"):
     all_files = glob(os.path.join(folder_path, '*.csv'))
     for file in all_files:
         try:
-            print(f"📂 Processing: {file}")
+            print(f"Processing: {file}")
             state_code = os.path.basename(file)[:2].upper()
             df = pd.read_csv(file)
             df.columns = [col.strip() for col in df.columns]
@@ -82,7 +82,7 @@ def load_combined_processed_data(folder="processed"):
     return pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
 
 def train_model(df, model_type='xgb'):
-    print(f"🧠 Training model: {model_type.upper()}")
+    print(f"Training model: {model_type.upper()}")
     full_features = [
         'PM2.5 (ug/m3)', 'PM10 (ug/m3)', 'NO2 (ug/m3)', 'SO2 (ug/m3)',
         'CO (mg/m3)', 'Ozone (ug/m3)', 'NH3 (ug/m3)',
@@ -111,7 +111,7 @@ def train_model(df, model_type='xgb'):
     return model, df
 
 def predict_aqi_for_year(year=2022, model_type='xgb'):
-    print(f"📅 Predicting AQI for {year} using {model_type.upper()}")
+    print(f"Predicting AQI for {year} using {model_type.upper()}")
     df = pd.read_csv("final_with_aqi.csv")
     df['From Date'] = pd.to_datetime(df['From Date'])
     feature_cols = joblib.load(f"model_features_{model_type}.pkl")
@@ -144,7 +144,7 @@ def predict_aqi_for_year(year=2022, model_type='xgb'):
 
     result_df = pd.DataFrame(predictions)
     result_df.to_csv(f"predicted_aqi_{year}_{model_type}.csv", index=False)
-    print(f"✅ Saved to predicted_aqi_{year}_{model_type}.csv")
+    print(f"Saved to predicted_aqi_{year}_{model_type}.csv")
 
 # Main execution
 if __name__ == "__main__":
